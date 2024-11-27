@@ -59,6 +59,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    debugImplementation ("androidx.arch.core:core-testing:2.2.0")
 
     // OkHttp + SSE
     implementation (libs.okhttp)
@@ -79,5 +80,13 @@ dependencies {
     kapt(libs.squareup.moshi.kotlin.codegen)
     kaptTest(libs.squareup.moshi.kotlin.codegen)
     kaptAndroidTest(libs.squareup.moshi.kotlin.codegen)
+
+    testImplementation (libs.kotlinx.coroutines.test)
+    androidTestImplementation (libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
+    
+    androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
+    testImplementation("app.cash.turbine:turbine:1.2.0")
 
 }

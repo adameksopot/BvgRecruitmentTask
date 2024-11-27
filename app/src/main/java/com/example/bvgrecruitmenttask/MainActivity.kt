@@ -26,7 +26,11 @@ class MainActivity : ComponentActivity() {
                 val events by viewModel.state.collectAsState()
                 ActivityScreen(events = events)
             }
-
         }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        viewModel.getSSEEvents()
     }
 }

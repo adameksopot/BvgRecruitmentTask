@@ -8,6 +8,7 @@ import com.example.bvgrecruitmenttask.domain.repository.ServerSentEventsReposito
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flowOf
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -21,7 +22,6 @@ class ServerSentEventsRepositoryEventsRepositoryImpl @Inject constructor(
     private val request: Request,
     private val mapper: ServerSentEventResponseMapper
 ) : ServerSentEventsRepository {
-
     override val eventFlow: Flow<Event> = callbackFlow {
         val eventSource = EventSources.createFactory(client).newEventSource(request, object : EventSourceListener() {
             override fun onOpen(eventSource: EventSource, response: Response) {
@@ -59,7 +59,6 @@ class ServerSentEventsRepositoryEventsRepositoryImpl @Inject constructor(
     private fun handleDeleteEvent(data: String): Event = Event(
                 id = data,
                 eventType = EventType.Delete,
-
             )
 }
 
