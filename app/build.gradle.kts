@@ -138,8 +138,11 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
-
-    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
-    testImplementation("app.cash.turbine:turbine:1.2.0")
+    testImplementation(libs.kotlinx.coroutines.test.v161)
+    androidTestImplementation(libs.kotlinx.coroutines.test.v142)
+    testImplementation(libs.turbine)
+    implementation ("org.mockito:mockito-inline:5.2.0"){
+        exclude(group = "net.bytebudd", module = "byte-buddy")
+    }
+    implementation (libs.byte.buddy)
 }

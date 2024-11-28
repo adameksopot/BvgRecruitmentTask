@@ -6,8 +6,10 @@ import com.example.bvgrecruitmenttask.data.EventType
 import com.example.bvgrecruitmenttask.domain.model.Account
 import com.example.bvgrecruitmenttask.domain.model.Event
 import com.example.bvgrecruitmenttask.domain.repository.ServerSentEventsRepository
+import com.example.bvgrecruitmenttask.domain.time.CurrentTimeProvider
 import com.example.bvgrecruitmenttask.presentation.StreamingViewModel
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
@@ -21,26 +23,33 @@ import org.junit.Test
 import java.io.IOException
 
 class StreamingViewModelTest {
+
     @ExperimentalCoroutinesApi
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var sut: StreamingViewModel
     private val repository: ServerSentEventsRepository = mockk()
+    private val currentTimeProvider: CurrentTimeProvider = mockk()
 
     @Before
     fun setup() {
-        sut = StreamingViewModel(repository)
+        sut = StreamingViewModel(repository, currentTimeProvider)
+    }
+
+    init {
+        every { currentTimeProvider.currentTimeMillis() } returns 123123L
     }
 
     @Test
     fun `Given event flow emits an event Then state should contain the emitted event`() {
-        val expectedItem = Event(eventType = EventType.Delete, id = "12")
+        val expectedItem = Event(eventType = EventType.Delete, id = "12", timestamp = currentTimeProvider.currentTimeMillis())
         coEvery { repository.eventFlow } returns
             flowOf(
                 Event(
                     eventType = EventType.Delete,
                     id = "12",
+                    timestamp = currentTimeProvider.currentTimeMillis()
                 ),
             )
         sut.collectEvents()
@@ -57,7 +66,7 @@ class StreamingViewModelTest {
 
     @Test
     fun `Given error event Then state should be error`() {
-        val expectedItem = Event(eventType = EventType.Error)
+        val expectedItem = Event(eventType = EventType.Error, timestamp = currentTimeProvider.currentTimeMillis())
 
         runTest {
             coEvery { repository.eventFlow } returns flow { throw IOException() }
@@ -76,11 +85,11 @@ class StreamingViewModelTest {
     fun `Given a list of events When search query is applied Then filtered state should contain matching events`() {
         val events =
             listOf(
-                Event(eventType = EventType.Update, id = "1", account = Account("Luke Skywalker")),
-                Event(eventType = EventType.Update, id = "2", account = Account("Darth Vader")),
-                Event(eventType = EventType.Update, id = "3", account = Account("Leia Organa")),
-                Event(eventType = EventType.Update, id = "4", account = Account("HanSolo")),
-                Event(eventType = EventType.Update, id = "5", account = Account("Obi Wan Kenobi")),
+                Event(eventType = EventType.Update, id = "1", account = Account("Luke Skywalker",), timestamp = currentTimeProvider.currentTimeMillis()),
+                Event(eventType = EventType.Update, id = "2", account = Account("Darth Vader"), timestamp = currentTimeProvider.currentTimeMillis()),
+                Event(eventType = EventType.Update, id = "3", account = Account("Leia Organa"), timestamp = currentTimeProvider.currentTimeMillis()),
+                Event(eventType = EventType.Update, id = "4", account = Account("HanSolo"), timestamp = currentTimeProvider.currentTimeMillis()),
+                Event(eventType = EventType.Update, id = "5", account = Account("Obi Wan Kenobi"), timestamp = currentTimeProvider.currentTimeMillis())
             )
 
         coEvery { repository.eventFlow } returns flowOf(*events.toTypedArray())

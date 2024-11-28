@@ -1,6 +1,5 @@
 package com.example.bvgrecruitmenttask.data.repository
 
-import android.util.Log
 import com.example.bvgrecruitmenttask.data.EventType
 import com.example.bvgrecruitmenttask.data.mapper.ServerSentEventResponseMapper
 import com.example.bvgrecruitmenttask.data.requestfactory.RequestFactory
@@ -35,7 +34,6 @@ class ServerSentEventsRepositoryEventsRepositoryImpl
                                 eventSource: EventSource,
                                 response: Response,
                             ) {
-                                Log.d(TAG, "Connection Opened")
                             }
 
                             override fun onEvent(
@@ -44,21 +42,16 @@ class ServerSentEventsRepositoryEventsRepositoryImpl
                                 type: String?,
                                 data: String,
                             ) {
-                                try {
-                                    val result =
+                                val result =
                                         when (type) {
                                             "delete" -> handleDeleteEvent(data)
                                             else -> mapper.mapEventResponse(json = data, type = type)
                                         }
 
                                     result?.let { trySend(it) }
-                                } catch (e: Exception) {
-                                    Log.e(TAG, "Error parsing event: ${e.message}", e)
                                 }
-                            }
 
                             override fun onClosed(eventSource: EventSource) {
-                                Log.d(TAG, "Connection Closed")
                                 close()
                             }
 
@@ -67,7 +60,6 @@ class ServerSentEventsRepositoryEventsRepositoryImpl
                                 t: Throwable?,
                                 response: Response?,
                             ) {
-                                Log.e(TAG, "Connection Failed: ${t?.message} - Response: ${response?.body}")
                                 t?.let { close(it) }
                             }
                         },
@@ -85,5 +77,3 @@ class ServerSentEventsRepositoryEventsRepositoryImpl
                 timestamp = currentTimeProvider.currentTimeMillis(),
             )
     }
-
-const val TAG = "EventsRepositoryImpl"
