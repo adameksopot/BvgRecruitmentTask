@@ -7,5 +7,6 @@ data class Event(
     val id: String? = null,
     val createdAt: String? = null,
     val eventType: EventType,
-    val account: Account? = null
+    val account: Account? = null,
+    var timestamp: Long = System.currentTimeMillis(),
 )

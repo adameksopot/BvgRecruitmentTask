@@ -8,12 +8,17 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.bvgrecruitmenttask.NetworkStatusBroadcastReceiver
 import com.example.bvgrecruitmenttask.domain.model.Event
 
 @Composable
-internal fun ActivityScreen(events: List<Event>) {
-
-    Scaffold { paddingValues ->
+fun ServerSentEventsScreen(events: List<Event>, onSearchQuery: (String) -> Unit, networkConnectionAvailable: () -> Unit) {
+    NetworkStatusBroadcastReceiver(onNetworkRestored = networkConnectionAvailable)
+    Scaffold(
+        topBar = {
+            SearchTopBar(onValueChange = onSearchQuery)
+        }
+    ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
