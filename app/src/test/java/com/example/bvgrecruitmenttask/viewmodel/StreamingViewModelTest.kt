@@ -1,11 +1,12 @@
-package com.example.bvgrecruitmenttask
+package com.example.bvgrecruitmenttask.viewmodel
 
 import app.cash.turbine.test
+import com.example.bvgrecruitmenttask.MainCoroutineRule
 import com.example.bvgrecruitmenttask.data.EventType
 import com.example.bvgrecruitmenttask.domain.model.Account
 import com.example.bvgrecruitmenttask.domain.model.Event
 import com.example.bvgrecruitmenttask.domain.repository.ServerSentEventsRepository
-import com.example.bvgrecruitmenttask.presentation.ServerSentEventsViewModel
+import com.example.bvgrecruitmenttask.presentation.StreamingViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -19,17 +20,17 @@ import org.junit.Rule
 import org.junit.Test
 import java.io.IOException
 
-class ServerSentEventsViewModelTest {
+class StreamingViewModelTest {
     @ExperimentalCoroutinesApi
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var sut: ServerSentEventsViewModel
+    private lateinit var sut: StreamingViewModel
     private val repository: ServerSentEventsRepository = mockk()
 
     @Before
     fun setup() {
-        sut = ServerSentEventsViewModel(repository)
+        sut = StreamingViewModel(repository)
     }
 
     @Test

@@ -3,13 +3,14 @@ package com.example.bvgrecruitmenttask.data.repository
 import android.util.Log
 import com.example.bvgrecruitmenttask.data.EventType
 import com.example.bvgrecruitmenttask.data.mapper.ServerSentEventResponseMapper
+import com.example.bvgrecruitmenttask.data.requestfactory.RequestFactory
 import com.example.bvgrecruitmenttask.domain.model.Event
 import com.example.bvgrecruitmenttask.domain.repository.ServerSentEventsRepository
+import com.example.bvgrecruitmenttask.domain.time.CurrentTimeProvider
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.Response
 import okhttp3.sse.EventSource
 import okhttp3.sse.EventSourceListener
@@ -20,14 +21,15 @@ class ServerSentEventsRepositoryEventsRepositoryImpl
     @Inject
     constructor(
         private val client: OkHttpClient,
-        private val request: Request,
+        private val requestFactory: RequestFactory,
         private val mapper: ServerSentEventResponseMapper,
+        private val currentTimeProvider: CurrentTimeProvider,
     ) : ServerSentEventsRepository {
         override val eventFlow: Flow<Event> =
             callbackFlow {
                 val eventSource =
                     EventSources.createFactory(client).newEventSource(
-                        request,
+                        requestFactory.createSseRequest(),
                         object : EventSourceListener() {
                             override fun onOpen(
                                 eventSource: EventSource,
@@ -80,6 +82,7 @@ class ServerSentEventsRepositoryEventsRepositoryImpl
             Event(
                 id = data,
                 eventType = EventType.Delete,
+                timestamp = currentTimeProvider.currentTimeMillis(),
             )
     }
 

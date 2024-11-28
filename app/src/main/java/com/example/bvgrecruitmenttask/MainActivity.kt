@@ -7,14 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.example.bvgrecruitmenttask.presentation.ServerSentEventsViewModel
+import com.example.bvgrecruitmenttask.presentation.StreamingViewModel
 import com.example.bvgrecruitmenttask.ui.ServerSentEventsScreen
 import com.example.bvgrecruitmenttask.ui.theme.BvgRecruitmentTaskTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewModel: ServerSentEventsViewModel by viewModels()
+    private val viewModel: StreamingViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

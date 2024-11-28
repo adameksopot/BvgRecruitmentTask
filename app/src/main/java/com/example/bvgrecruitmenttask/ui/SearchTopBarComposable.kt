@@ -45,8 +45,7 @@ fun SearchTopBar(onValueChange: (String) -> Unit) {
                             layout(placeable.width, placeable.height) {
                                 placeable.place(-paddingCompensation / 2, 0)
                             }
-                        }
-                        .background(Color.Transparent),
+                        }.background(Color.Transparent),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 TextField(
