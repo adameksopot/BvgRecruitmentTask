@@ -10,7 +10,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AndroidUtilsModule {
-
     @Provides
     @Singleton
     fun provideMoshi(): Moshi {

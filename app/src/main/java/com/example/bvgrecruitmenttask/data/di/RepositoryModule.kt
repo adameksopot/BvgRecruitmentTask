@@ -7,11 +7,9 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
-
     @Binds
-    abstract fun bindRepository(impl : ServerSentEventsRepositoryEventsRepositoryImpl): ServerSentEventsRepository
+    abstract fun bindRepository(impl: ServerSentEventsRepositoryEventsRepositoryImpl): ServerSentEventsRepository
 }

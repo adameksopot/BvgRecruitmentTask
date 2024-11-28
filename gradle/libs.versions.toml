@@ -18,6 +18,7 @@ moshiKotlinCodegenVersion = "1.15.1"
 okhttp = "4.9.3"
 okhttpEventsource = "2.5.0"
 okhttpSse = "4.9.3"
+ktlint-gradle = "12.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,4 +51,6 @@ squareup-moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-code
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hilt_android = { id = "com.google.dagger.hilt.android", version = "2.51.1" }
+ktlint-gradle = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-gradle" }
 

@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.bvgrecruitmenttask.domain.model.Event
 
-
 @Composable
 fun EventItem(event: Event) {
     Column(modifier = Modifier.padding(8.dp)) {

@@ -1,9 +1,8 @@
 package com.example.bvgrecruitmenttask.data
 
-
-
 enum class EventType {
-    Delete, Update, Unknown, Error,
+    Delete,
+    Update,
+    Unknown,
+    Error,
 }
-
-

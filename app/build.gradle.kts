@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ktlint.gradle)
 
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
@@ -21,12 +22,17 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    ktlint {
+        android.set(true)
+        ignoreFailures.set(false)
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -59,21 +65,20 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    debugImplementation ("androidx.arch.core:core-testing:2.2.0")
+    debugImplementation("androidx.arch.core:core-testing:2.2.0")
 
     // OkHttp + SSE
-    implementation (libs.okhttp)
-    implementation (libs.okhttp.eventsource)
-    implementation (libs.okhttp.sse)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.eventsource)
+    implementation(libs.okhttp.sse)
 
     // Coroutines
-    implementation (libs.kotlinx.coroutines.android)
-    implementation (libs.androidx.lifecycle.runtime.ktx.v241)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v241)
 
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-
 
     // Moshi
     implementation(libs.moshi.kotlin)
@@ -81,12 +86,11 @@ dependencies {
     kaptTest(libs.squareup.moshi.kotlin.codegen)
     kaptAndroidTest(libs.squareup.moshi.kotlin.codegen)
 
-    testImplementation (libs.kotlinx.coroutines.test)
-    androidTestImplementation (libs.kotlinx.coroutines.test)
+    testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
-    
-    androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
-    testImplementation("app.cash.turbine:turbine:1.2.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
 
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
+    testImplementation("app.cash.turbine:turbine:1.2.0")
 }

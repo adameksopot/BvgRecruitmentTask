@@ -5,6 +5,7 @@ import com.example.bvgrecruitmenttask.data.EventType
 import com.example.bvgrecruitmenttask.domain.model.Account
 import com.example.bvgrecruitmenttask.domain.model.Event
 import com.example.bvgrecruitmenttask.domain.repository.ServerSentEventsRepository
+import com.example.bvgrecruitmenttask.presentation.ServerSentEventsViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -19,8 +20,6 @@ import org.junit.Test
 import java.io.IOException
 
 class ServerSentEventsViewModelTest {
-
-
     @ExperimentalCoroutinesApi
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
@@ -36,12 +35,13 @@ class ServerSentEventsViewModelTest {
     @Test
     fun `Given event flow emits an event Then state should contain the emitted event`() {
         val expectedItem = Event(eventType = EventType.Delete, id = "12")
-        coEvery { repository.eventFlow } returns flowOf(
-            Event(
-                eventType = EventType.Delete,
-                id = "12"
+        coEvery { repository.eventFlow } returns
+            flowOf(
+                Event(
+                    eventType = EventType.Delete,
+                    id = "12",
+                ),
             )
-        )
         sut.collectEvents()
         runTest {
             sut.state.test {
@@ -73,13 +73,14 @@ class ServerSentEventsViewModelTest {
 
     @Test
     fun `Given a list of events When search query is applied Then filtered state should contain matching events`() {
-        val events = listOf(
-            Event(eventType = EventType.Update, id = "1", account = Account("Luke Skywalker")),
-            Event(eventType = EventType.Update, id = "2", account = Account("Darth Vader")),
-            Event(eventType = EventType.Update, id = "3", account = Account("Leia Organa")),
-            Event(eventType = EventType.Update, id = "4", account = Account("HanSolo")),
-            Event(eventType = EventType.Update, id = "5", account = Account("Obi Wan Kenobi"))
-        )
+        val events =
+            listOf(
+                Event(eventType = EventType.Update, id = "1", account = Account("Luke Skywalker")),
+                Event(eventType = EventType.Update, id = "2", account = Account("Darth Vader")),
+                Event(eventType = EventType.Update, id = "3", account = Account("Leia Organa")),
+                Event(eventType = EventType.Update, id = "4", account = Account("HanSolo")),
+                Event(eventType = EventType.Update, id = "5", account = Account("Obi Wan Kenobi")),
+            )
 
         coEvery { repository.eventFlow } returns flowOf(*events.toTypedArray())
 
@@ -92,17 +93,17 @@ class ServerSentEventsViewModelTest {
                 assertTrue(initialState.isEmpty())
 
                 val updatedState = awaitItem()
-                val matchingEvents = updatedState.filter {
-                    it.account?.username?.contains(
-                        "Vader",
-                        ignoreCase = true
-                    ) == true
-                }
+                val matchingEvents =
+                    updatedState.filter {
+                        it.account?.username?.contains(
+                            "Vader",
+                            ignoreCase = true,
+                        ) == true
+                    }
 
                 assertEquals(1, matchingEvents.size)
                 assertEquals("Darth Vader", matchingEvents.first().account?.username)
             }
         }
     }
-
 }
