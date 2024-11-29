@@ -118,5 +118,5 @@ class StreamingViewModel
     }
 
 const val ITEM_LIFESPAN =
-    1000L // the deletion stops on internet disconnection but as long as the internet is connected, the deletion continues
+    5000L // the deletion stops on internet disconnection but as long as the internet is connected, the deletion continues
 const val TAG = "ServerSentEventsViewModel"

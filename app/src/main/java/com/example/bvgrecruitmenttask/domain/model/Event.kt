@@ -8,4 +8,5 @@ data class Event(
     val eventType: EventType,
     val account: Account? = null,
     var timestamp: Long,
+    val htmlContent: String? = null,
 )

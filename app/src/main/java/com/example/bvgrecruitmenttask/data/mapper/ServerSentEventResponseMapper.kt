@@ -28,6 +28,7 @@ class ServerSentEventResponseMapper
                         eventType = determineEventType(type),
                         account = Account(it.account?.username),
                         timestamp = currentTimeProvider.currentTimeMillis(),
+                        htmlContent = it.htmlContent,
                     )
                 }
             } catch (e: Exception) {

@@ -8,4 +8,5 @@ data class ServerSentEventResponse(
     val id: String,
     @Json(name = "created_at") val createdAt: String,
     val account: AccountResponse? = null,
+    @Json(name = "content") val htmlContent: String? = null,
 )
