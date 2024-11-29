@@ -6,4 +6,7 @@ plugins {
     alias(libs.plugins.hilt.android) apply false
     alias(libs.plugins.ktlint.gradle) apply false
 
+    id("org.ec4j.editorconfig") version "0.1.0"
+
+
 }

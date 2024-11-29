@@ -13,7 +13,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AndroidUtilsModule {
-
     companion object {
         @Provides
         fun provideMoshi(): Moshi = Moshi.Builder().build()
@@ -23,5 +22,5 @@ abstract class AndroidUtilsModule {
     }
 
     @Binds
-   abstract fun bindCurrentTimeProvider(currentTimeProviderImpl: CurrentTimeProviderImpl): CurrentTimeProvider
+    abstract fun bindCurrentTimeProvider(currentTimeProviderImpl: CurrentTimeProviderImpl): CurrentTimeProvider
 }

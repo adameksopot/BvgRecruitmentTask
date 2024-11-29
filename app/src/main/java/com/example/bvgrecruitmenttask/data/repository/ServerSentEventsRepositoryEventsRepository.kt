@@ -43,13 +43,13 @@ class ServerSentEventsRepositoryEventsRepositoryImpl
                                 data: String,
                             ) {
                                 val result =
-                                        when (type) {
-                                            "delete" -> handleDeleteEvent(data)
-                                            else -> mapper.mapEventResponse(json = data, type = type)
-                                        }
+                                    when (type) {
+                                        "delete" -> handleDeleteEvent(data)
+                                        else -> mapper.mapEventResponse(json = data, type = type)
+                                    }
 
-                                    result?.let { trySend(it) }
-                                }
+                                result?.let { trySend(it) }
+                            }
 
                             override fun onClosed(eventSource: EventSource) {
                                 close()

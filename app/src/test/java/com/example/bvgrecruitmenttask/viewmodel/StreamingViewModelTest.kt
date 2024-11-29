@@ -23,7 +23,6 @@ import org.junit.Test
 import java.io.IOException
 
 class StreamingViewModelTest {
-
     @ExperimentalCoroutinesApi
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
@@ -49,7 +48,7 @@ class StreamingViewModelTest {
                 Event(
                     eventType = EventType.Delete,
                     id = "12",
-                    timestamp = currentTimeProvider.currentTimeMillis()
+                    timestamp = currentTimeProvider.currentTimeMillis(),
                 ),
             )
         sut.collectEvents()
@@ -85,11 +84,36 @@ class StreamingViewModelTest {
     fun `Given a list of events When search query is applied Then filtered state should contain matching events`() {
         val events =
             listOf(
-                Event(eventType = EventType.Update, id = "1", account = Account("Luke Skywalker",), timestamp = currentTimeProvider.currentTimeMillis()),
-                Event(eventType = EventType.Update, id = "2", account = Account("Darth Vader"), timestamp = currentTimeProvider.currentTimeMillis()),
-                Event(eventType = EventType.Update, id = "3", account = Account("Leia Organa"), timestamp = currentTimeProvider.currentTimeMillis()),
-                Event(eventType = EventType.Update, id = "4", account = Account("HanSolo"), timestamp = currentTimeProvider.currentTimeMillis()),
-                Event(eventType = EventType.Update, id = "5", account = Account("Obi Wan Kenobi"), timestamp = currentTimeProvider.currentTimeMillis())
+                Event(
+                    eventType = EventType.Update,
+                    id = "1",
+                    account = Account("Luke Skywalker"),
+                    timestamp = currentTimeProvider.currentTimeMillis(),
+                ),
+                Event(
+                    eventType = EventType.Update,
+                    id = "2",
+                    account = Account("Darth Vader"),
+                    timestamp = currentTimeProvider.currentTimeMillis(),
+                ),
+                Event(
+                    eventType = EventType.Update,
+                    id = "3",
+                    account = Account("Leia Organa"),
+                    timestamp = currentTimeProvider.currentTimeMillis(),
+                ),
+                Event(
+                    eventType = EventType.Update,
+                    id = "4",
+                    account = Account("HanSolo"),
+                    timestamp = currentTimeProvider.currentTimeMillis(),
+                ),
+                Event(
+                    eventType = EventType.Update,
+                    id = "5",
+                    account = Account("Obi Wan Kenobi"),
+                    timestamp = currentTimeProvider.currentTimeMillis(),
+                ),
             )
 
         coEvery { repository.eventFlow } returns flowOf(*events.toTypedArray())

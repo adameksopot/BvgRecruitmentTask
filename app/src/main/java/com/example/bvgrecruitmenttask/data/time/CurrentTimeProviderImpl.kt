@@ -6,5 +6,5 @@ import javax.inject.Inject
 class CurrentTimeProviderImpl
     @Inject
     constructor() : CurrentTimeProvider {
-    override fun currentTimeMillis(): Long = System.currentTimeMillis()
-}
+        override fun currentTimeMillis(): Long = System.currentTimeMillis()
+    }
