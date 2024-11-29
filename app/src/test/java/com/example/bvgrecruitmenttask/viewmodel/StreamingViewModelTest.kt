@@ -23,6 +23,7 @@ import org.junit.Test
 import java.io.IOException
 
 class StreamingViewModelTest {
+
     @ExperimentalCoroutinesApi
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
